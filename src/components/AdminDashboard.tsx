@@ -1,0 +1,331 @@
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
+import { 
+  Users, 
+  DollarSign, 
+  TrendingUp, 
+  FileText, 
+  LogOut, 
+  CheckCircle, 
+  XCircle,
+  Clock,
+  Calendar
+} from "lucide-react";
+
+interface AdminDashboardProps {
+  userName: string;
+  userRole: "admin" | "treasurer";
+  onLogout: () => void;
+}
+
+// Mock data - in real app, this would come from your backend
+const mockLoans = [
+  {
+    id: 1,
+    memberName: "John Doe",
+    amount: 500000,
+    reason: "Small business expansion",
+    status: "pending",
+    dateRequested: "2024-01-15",
+    dateDue: "2024-07-15"
+  },
+  {
+    id: 2,
+    memberName: "Jane Smith",
+    amount: 300000,
+    reason: "School fees",
+    status: "approved",
+    dateRequested: "2024-01-10",
+    dateDue: "2024-06-10"
+  },
+  {
+    id: 3,
+    memberName: "Peter Johnson",
+    amount: 750000,
+    reason: "Medical emergency",
+    status: "pending",
+    dateRequested: "2024-01-20",
+    dateDue: "2024-08-20"
+  }
+];
+
+const mockMembers = [
+  { id: 1, name: "John Doe", email: "john@example.com", phone: "+255123456789", status: "active" },
+  { id: 2, name: "Jane Smith", email: "jane@example.com", phone: "+255123456790", status: "active" },
+  { id: 3, name: "Peter Johnson", email: "peter@example.com", phone: "+255123456791", status: "pending" },
+];
+
+const mockTransactions = [
+  { id: 1, member: "John Doe", type: "contribution", amount: 50000, date: "2024-01-25" },
+  { id: 2, member: "Jane Smith", type: "repayment", amount: 25000, date: "2024-01-24" },
+  { id: 3, member: "Peter Johnson", type: "contribution", amount: 50000, date: "2024-01-23" },
+];
+
+const AdminDashboard = ({ userName, userRole, onLogout }: AdminDashboardProps) => {
+  const [loans, setLoans] = useState(mockLoans);
+
+  const handleLoanAction = (loanId: number, action: "approve" | "reject") => {
+    setLoans(prev => prev.map(loan => 
+      loan.id === loanId 
+        ? { ...loan, status: action === "approve" ? "approved" : "rejected" }
+        : loan
+    ));
+    toast.success(`Loan ${action}d successfully`);
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-TZ', {
+      style: 'currency',
+      currency: 'TZS',
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center">
+              <DollarSign className="h-8 w-8 text-green-600 mr-2" />
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Digital Vikoba</h1>
+                <p className="text-sm text-gray-600">{userRole.charAt(0).toUpperCase() + userRole.slice(1)} Dashboard</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-600">Welcome, {userName}</span>
+              <Button variant="outline" onClick={onLogout} className="flex items-center">
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Members</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">24</div>
+              <p className="text-xs text-muted-foreground">+2 from last month</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Loans</CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{formatCurrency(2500000)}</div>
+              <p className="text-xs text-muted-foreground">Active loans</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Collections</CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{formatCurrency(1200000)}</div>
+              <p className="text-xs text-muted-foreground">This month</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Pending Approvals</CardTitle>
+              <Clock className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">3</div>
+              <p className="text-xs text-muted-foreground">Require attention</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Main Content Tabs */}
+        <Tabs defaultValue="loans" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="loans">Loan Management</TabsTrigger>
+            <TabsTrigger value="members">Members</TabsTrigger>
+            <TabsTrigger value="transactions">Transactions</TabsTrigger>
+            <TabsTrigger value="reports">Reports</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="loans" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Loan Applications</CardTitle>
+                <CardDescription>Review and manage loan requests</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {loans.map((loan) => (
+                    <div key={loan.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <h4 className="font-semibold">{loan.memberName}</h4>
+                          <Badge variant={
+                            loan.status === "approved" ? "default" :
+                            loan.status === "rejected" ? "destructive" : "secondary"
+                          }>
+                            {loan.status}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-1">
+                          Amount: <span className="font-medium">{formatCurrency(loan.amount)}</span>
+                        </p>
+                        <p className="text-sm text-gray-600 mb-1">Reason: {loan.reason}</p>
+                        <p className="text-sm text-gray-500">
+                          Requested: {loan.dateRequested} | Due: {loan.dateDue}
+                        </p>
+                      </div>
+                      
+                      {loan.status === "pending" && (
+                        <div className="flex space-x-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleLoanAction(loan.id, "approve")}
+                            className="bg-green-600 hover:bg-green-700"
+                          >
+                            <CheckCircle className="h-4 w-4 mr-1" />
+                            Approve
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleLoanAction(loan.id, "reject")}
+                          >
+                            <XCircle className="h-4 w-4 mr-1" />
+                            Reject
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="members" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Member Management</CardTitle>
+                <CardDescription>View and manage group members</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {mockMembers.map((member) => (
+                    <div key={member.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div>
+                        <h4 className="font-semibold">{member.name}</h4>
+                        <p className="text-sm text-gray-600">{member.email}</p>
+                        <p className="text-sm text-gray-600">{member.phone}</p>
+                      </div>
+                      <Badge variant={member.status === "active" ? "default" : "secondary"}>
+                        {member.status}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="transactions" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Transactions</CardTitle>
+                <CardDescription>View all financial transactions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {mockTransactions.map((transaction) => (
+                    <div key={transaction.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div>
+                        <h4 className="font-semibold">{transaction.member}</h4>
+                        <p className="text-sm text-gray-600 capitalize">{transaction.type}</p>
+                        <p className="text-sm text-gray-500">{transaction.date}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-green-600">
+                          {formatCurrency(transaction.amount)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="reports" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Financial Reports</CardTitle>
+                <CardDescription>Generate and view financial summaries</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="p-4 border rounded-lg">
+                    <h4 className="font-semibold mb-2">Monthly Summary</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Total Contributions:</span>
+                        <span className="font-medium">{formatCurrency(1200000)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Loans Disbursed:</span>
+                        <span className="font-medium">{formatCurrency(800000)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Repayments:</span>
+                        <span className="font-medium">{formatCurrency(300000)}</span>
+                      </div>
+                      <div className="flex justify-between border-t pt-2">
+                        <span className="font-semibold">Net Position:</span>
+                        <span className="font-semibold text-green-600">{formatCurrency(700000)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 border rounded-lg">
+                    <h4 className="font-semibold mb-2">Quick Actions</h4>
+                    <div className="space-y-2">
+                      <Button className="w-full" variant="outline">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        Schedule Meeting
+                      </Button>
+                      <Button className="w-full" variant="outline">
+                        <FileText className="h-4 w-4 mr-2" />
+                        Export Report
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+};
+
+export default AdminDashboard;
