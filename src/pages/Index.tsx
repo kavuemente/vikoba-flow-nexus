@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Users, DollarSign, TrendingUp, Shield } from "lucide-react";
+import { Users, DollarSign, TrendingUp, Shield, Coins, PiggyBank, CreditCard } from "lucide-react";
 import AdminDashboard from "@/components/AdminDashboard";
 import MemberDashboard from "@/components/MemberDashboard";
 
@@ -40,61 +39,126 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <DollarSign className="h-12 w-12 text-green-600 mr-2" />
-            <h1 className="text-4xl font-bold text-gray-900">Digital Vikoba</h1>
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-r from-emerald-500 to-blue-600 p-4 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-300">
+              <DollarSign className="h-12 w-12 text-white" />
+            </div>
+            <div className="ml-4">
+              <h1 className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+                Digital Vikoba
+              </h1>
+              <div className="flex items-center justify-center mt-2">
+                <Coins className="h-5 w-5 text-amber-500 mr-2" />
+                <span className="text-lg font-semibold text-gray-700">Powered by Community</span>
+                <Coins className="h-5 w-5 text-amber-500 ml-2" />
+              </div>
+            </div>
           </div>
-          <p className="text-lg text-gray-600">Modern Group Savings & Loan Management System</p>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Transform your group savings with our modern, secure, and user-friendly Vikoba management system
+          </p>
         </div>
 
         {/* Features Section */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card className="text-center">
-            <CardHeader>
-              <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <CardTitle className="text-lg">Member Management</CardTitle>
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <Card className="text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-lg bg-gradient-to-br from-blue-50 to-indigo-100">
+            <CardHeader className="pb-4">
+              <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-3 rounded-full w-16 h-16 mx-auto mb-4 shadow-lg">
+                <Users className="h-10 w-10 text-white mx-auto" />
+              </div>
+              <CardTitle className="text-xl font-bold text-gray-800">Member Management</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">Secure user registration and role-based access</p>
+              <p className="text-gray-600 leading-relaxed">
+                Secure user registration with role-based access control and comprehensive member profiles
+              </p>
             </CardContent>
           </Card>
           
-          <Card className="text-center">
-            <CardHeader>
-              <TrendingUp className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <CardTitle className="text-lg">Loan Tracking</CardTitle>
+          <Card className="text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-lg bg-gradient-to-br from-emerald-50 to-green-100">
+            <CardHeader className="pb-4">
+              <div className="bg-gradient-to-r from-emerald-500 to-green-600 p-3 rounded-full w-16 h-16 mx-auto mb-4 shadow-lg">
+                <TrendingUp className="h-10 w-10 text-white mx-auto" />
+              </div>
+              <CardTitle className="text-xl font-bold text-gray-800">Smart Loan Tracking</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">Request, approve, and track loan repayments</p>
+              <p className="text-gray-600 leading-relaxed">
+                Automated loan processing, approval workflows, and intelligent repayment tracking
+              </p>
             </CardContent>
           </Card>
           
-          <Card className="text-center">
-            <CardHeader>
-              <Shield className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-              <CardTitle className="text-lg">Financial Reports</CardTitle>
+          <Card className="text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-lg bg-gradient-to-br from-purple-50 to-pink-100">
+            <CardHeader className="pb-4">
+              <div className="bg-gradient-to-r from-purple-500 to-pink-600 p-3 rounded-full w-16 h-16 mx-auto mb-4 shadow-lg">
+                <Shield className="h-10 w-10 text-white mx-auto" />
+              </div>
+              <CardTitle className="text-xl font-bold text-gray-800">Financial Analytics</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">Comprehensive financial analytics and reporting</p>
+              <p className="text-gray-600 leading-relaxed">
+                Real-time financial insights with comprehensive reporting and data visualization
+              </p>
             </CardContent>
           </Card>
         </div>
 
+        {/* Additional Features */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 mb-12 shadow-xl border border-white/20">
+          <h3 className="text-2xl font-bold text-center mb-8 text-gray-800">Why Choose Digital Vikoba?</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="flex items-center space-x-4">
+              <div className="bg-gradient-to-r from-green-400 to-emerald-500 p-2 rounded-lg">
+                <PiggyBank className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">Secure Savings</h4>
+                <p className="text-sm text-gray-600">Bank-level security for your group funds</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="bg-gradient-to-r from-blue-400 to-indigo-500 p-2 rounded-lg">
+                <CreditCard className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">Easy Payments</h4>
+                <p className="text-sm text-gray-600">Multiple payment methods supported</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="bg-gradient-to-r from-purple-400 to-pink-500 p-2 rounded-lg">
+                <TrendingUp className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">Growth Tracking</h4>
+                <p className="text-sm text-gray-600">Monitor your group's financial progress</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Login/Register Section */}
-        <Card className="max-w-md mx-auto">
-          <CardHeader>
-            <CardTitle>Access Your Account</CardTitle>
-            <CardDescription>Login to manage your Vikoba group</CardDescription>
+        <Card className="max-w-md mx-auto shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+          <CardHeader className="text-center pb-4">
+            <CardTitle className="text-2xl font-bold text-gray-800">Access Your Account</CardTitle>
+            <CardDescription className="text-gray-600">
+              Login to manage your Vikoba group and track your financial journey
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Login</TabsTrigger>
-                <TabsTrigger value="register">Register</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-gray-100">
+                <TabsTrigger value="login" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                  Login
+                </TabsTrigger>
+                <TabsTrigger value="register" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                  Register
+                </TabsTrigger>
               </TabsList>
               
               <TabsContent value="login">
@@ -141,6 +205,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
         />
       </div>
       
@@ -153,6 +218,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
         />
       </div>
       
@@ -162,7 +228,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           id="role"
           value={role}
           onChange={(e) => setRole(e.target.value as "admin" | "treasurer" | "member")}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full p-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
         >
           <option value="member">Member</option>
           <option value="treasurer">Treasurer</option>
@@ -170,14 +236,16 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         </select>
       </div>
       
-      <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
-        Login
+      <Button type="submit" className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white shadow-lg">
+        Login to Dashboard
       </Button>
       
-      <div className="text-sm text-gray-500 space-y-1">
-        <p><strong>Demo Accounts:</strong></p>
-        <p>Admin: admin@vikoba.tz / Password: admin123</p>
-        <p>Member: member@vikoba.tz / Password: member123</p>
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-100">
+        <p className="text-sm font-semibold text-blue-800 mb-2">🎯 Demo Accounts:</p>
+        <div className="space-y-1 text-xs text-blue-700">
+          <p><strong>Admin:</strong> admin@vikoba.tz | Password: admin123</p>
+          <p><strong>Member:</strong> member@vikoba.tz | Password: member123</p>
+        </div>
       </div>
     </form>
   );
@@ -220,6 +288,7 @@ const RegisterForm = () => {
           value={formData.name}
           onChange={handleChange}
           required
+          className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
       
@@ -233,6 +302,7 @@ const RegisterForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
+          className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
       
@@ -245,6 +315,7 @@ const RegisterForm = () => {
           value={formData.phone}
           onChange={handleChange}
           required
+          className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
       
@@ -258,6 +329,7 @@ const RegisterForm = () => {
           value={formData.password}
           onChange={handleChange}
           required
+          className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
       
@@ -271,11 +343,12 @@ const RegisterForm = () => {
           value={formData.confirmPassword}
           onChange={handleChange}
           required
+          className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
       
-      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-        Register
+      <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg">
+        Create Account
       </Button>
     </form>
   );
