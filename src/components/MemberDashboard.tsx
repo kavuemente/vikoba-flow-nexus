@@ -169,7 +169,7 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
           </TabsList>
 
           <TabsContent value="overview" className="mt-6">
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Account Summary</CardTitle>
@@ -222,6 +222,75 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Payout Group Status */}
+            <Card>
+              <CardHeader>
+                <CardTitle>My Payout Group Status</CardTitle>
+                <CardDescription>Your position in the rotating payout system</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Current Group Info */}
+                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h4 className="font-semibold text-blue-800">Main Group A</h4>
+                        <p className="text-sm text-blue-600">5 members • Monthly contribution: {formatCurrency(50000)}</p>
+                      </div>
+                      <Badge variant="default">Active</Badge>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-3 gap-4 text-sm">
+                      <div>
+                        <p className="text-gray-600">Your Position</p>
+                        <p className="font-semibold text-lg">2nd in queue</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Next Payout</p>
+                        <p className="font-semibold text-lg">March 1, 2024</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Payout Amount</p>
+                        <p className="font-semibold text-lg text-green-600">{formatCurrency(250000)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Payout History */}
+                  <div>
+                    <h4 className="font-semibold mb-3">Recent Payout Activity</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                            <span className="text-green-600 text-sm font-semibold">1</span>
+                          </div>
+                          <div>
+                            <p className="font-medium">John Doe received payout</p>
+                            <p className="text-xs text-gray-500">January 2024</p>
+                          </div>
+                        </div>
+                        <span className="font-semibold text-green-600">{formatCurrency(250000)}</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-3 border rounded-lg bg-yellow-50">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <span className="text-yellow-600 text-sm font-semibold">2</span>
+                          </div>
+                          <div>
+                            <p className="font-medium">Your turn next month</p>
+                            <p className="text-xs text-gray-500">February 2024</p>
+                          </div>
+                        </div>
+                        <span className="font-semibold text-yellow-600">Pending</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="request-loan" className="mt-6">
