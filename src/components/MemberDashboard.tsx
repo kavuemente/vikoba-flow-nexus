@@ -15,7 +15,8 @@ import {
   TrendingUp,
   Calendar,
   CreditCard,
-  History
+  History,
+  Users
 } from "lucide-react";
 
 interface MemberDashboardProps {
@@ -161,10 +162,11 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="request-loan">Request Loan</TabsTrigger>
             <TabsTrigger value="my-loans">My Loans</TabsTrigger>
+            <TabsTrigger value="payouts">Payout Groups</TabsTrigger>
             <TabsTrigger value="transactions">Transactions</TabsTrigger>
           </TabsList>
 
@@ -426,6 +428,143 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="payouts" className="mt-6">
+            <div className="space-y-6">
+              {/* My Payout Groups Card */}
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">My Payout Groups</CardTitle>
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">2</div>
+                  <p className="text-xs text-muted-foreground">Active group memberships</p>
+                </CardContent>
+              </Card>
+
+              {/* My Groups */}
+              <div className="grid gap-6">
+                <Card>
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="flex items-center space-x-2">
+                          <span>Main Group A</span>
+                          <Badge variant="default">Active</Badge>
+                        </CardTitle>
+                        <CardDescription>
+                          Cycle 1 of 5 • Next payout: 2024-02-01
+                        </CardDescription>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-600">My Position</p>
+                        <p className="text-2xl font-bold text-blue-600">#1</p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-semibold text-green-800">I'm receiving this month!</h4>
+                            <p className="text-green-700">Expected payout: {formatCurrency(250000)}</p>
+                          </div>
+                          <Badge variant="default" className="bg-green-600">
+                            Current Recipient
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-3 border rounded-lg">
+                          <p className="text-sm text-gray-600">Monthly Contribution</p>
+                          <p className="font-semibold">{formatCurrency(50000)}</p>
+                        </div>
+                        <div className="p-3 border rounded-lg">
+                          <p className="text-sm text-gray-600">Status</p>
+                          <Badge variant="default">Paid</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="flex items-center space-x-2">
+                          <span>Small Group B</span>
+                          <Badge variant="secondary">Waiting</Badge>
+                        </CardTitle>
+                        <CardDescription>
+                          Cycle 2 of 3 • Next payout: 2024-02-05
+                        </CardDescription>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-600">My Position</p>
+                        <p className="text-2xl font-bold text-blue-600">#3</p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-semibold text-blue-800">Mike Johnson is receiving</h4>
+                            <p className="text-blue-700">Payout amount: {formatCurrency(225000)}</p>
+                          </div>
+                          <Badge variant="outline">
+                            Current Cycle
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-3 border rounded-lg">
+                          <p className="text-sm text-gray-600">Monthly Contribution</p>
+                          <p className="font-semibold">{formatCurrency(75000)}</p>
+                        </div>
+                        <div className="p-3 border rounded-lg">
+                          <p className="text-sm text-gray-600">Status</p>
+                          <Badge variant="default">Paid</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* My Payout History */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>My Payout History</CardTitle>
+                  <CardDescription>Track my received payouts</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 border rounded-lg">
+                      <div>
+                        <p className="font-medium">Small Group B</p>
+                        <p className="text-sm text-gray-600">Cycle 1 • January 2024</p>
+                        <p className="text-xs text-gray-500">2024-01-05</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-green-600">{formatCurrency(225000)}</p>
+                        <Badge variant="outline" className="text-xs">Received</Badge>
+                      </div>
+                    </div>
+                    <div className="text-center p-4 text-sm text-gray-500">
+                      No more payout history
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           <TabsContent value="transactions" className="mt-6">
