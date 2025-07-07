@@ -168,7 +168,7 @@ const AdminDashboard = ({ userName, userRole, onLogout }: AdminDashboardProps) =
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Members</CardTitle>
@@ -210,6 +210,17 @@ const AdminDashboard = ({ userName, userRole, onLogout }: AdminDashboardProps) =
             <CardContent>
               <div className="text-2xl font-bold">3</div>
               <p className="text-xs text-muted-foreground">Require attention</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Payouts Made</CardTitle>
+              <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{formatCurrency(475000)}</div>
+              <p className="text-xs text-muted-foreground">Across all groups</p>
             </CardContent>
           </Card>
         </div>
@@ -282,17 +293,6 @@ const AdminDashboard = ({ userName, userRole, onLogout }: AdminDashboardProps) =
 
           <TabsContent value="payouts" className="mt-6">
             <div className="space-y-6">
-              {/* Total Payouts Made Card */}
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Payouts Made</CardTitle>
-                  <CheckCircle className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{formatCurrency(475000)}</div>
-                  <p className="text-xs text-muted-foreground">Across all groups</p>
-                </CardContent>
-              </Card>
 
               {/* Payout Alerts */}
               {payoutGroups.some(group => group.status === "waiting") && (

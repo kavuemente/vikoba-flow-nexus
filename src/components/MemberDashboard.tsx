@@ -114,7 +114,7 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Contributions</CardTitle>
@@ -156,6 +156,17 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
             <CardContent>
               <div className="text-2xl font-bold">{formatCurrency(memberData.nextPaymentAmount)}</div>
               <p className="text-xs text-muted-foreground">Due: {memberData.nextPayment}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Payout Balance</CardTitle>
+              <DollarSign className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-green-600">{formatCurrency(475000)}</div>
+              <p className="text-xs text-muted-foreground">Received from all groups</p>
             </CardContent>
           </Card>
         </div>
@@ -432,17 +443,6 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
 
           <TabsContent value="payouts" className="mt-6">
             <div className="space-y-6">
-              {/* Payout Balance Card */}
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Payout Balance</CardTitle>
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-green-600">{formatCurrency(475000)}</div>
-                  <p className="text-xs text-muted-foreground">Received from all groups</p>
-                </CardContent>
-              </Card>
 
               {/* My Payout Groups Card */}
               <Card>
