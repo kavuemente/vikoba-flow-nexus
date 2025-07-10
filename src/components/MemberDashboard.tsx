@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -58,6 +58,14 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
     purpose: "",
     reason: ""
   });
+  const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    const payoutCard = document.querySelector('.payouts-card') as HTMLElement;
+    if (payoutCard) {
+      payoutCard.style.display = activeTab === 'payouts' ? 'block' : 'none';
+    }
+  }, [activeTab]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-TZ', {
@@ -161,14 +169,30 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="overview" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="request-loan">Request Loan</TabsTrigger>
             <TabsTrigger value="my-loans">My Loans</TabsTrigger>
-            <TabsTrigger value="payouts">Payout Groups</TabsTrigger>
             <TabsTrigger value="transactions">Transactions</TabsTrigger>
+            <TabsTrigger value="payouts">Payout Groups</TabsTrigger>
           </TabsList>
+
+          {/* Total Payout Balance Card - shown only when payouts tab is active */}
+          <div className="mt-6">
+            <div className="payouts-card" style={{ display: 'none' }}>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total Payout Balance</CardTitle>
+                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-green-600">{formatCurrency(475000)}</div>
+                  <p className="text-xs text-muted-foreground">Received from all groups</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
 
           <TabsContent value="overview" className="mt-6">
             <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -432,17 +456,6 @@ const MemberDashboard = ({ userName, onLogout }: MemberDashboardProps) => {
 
           <TabsContent value="payouts" className="mt-6">
             <div className="space-y-6">
-              {/* Total Payout Balance Card */}
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Payout Balance</CardTitle>
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-green-600">{formatCurrency(475000)}</div>
-                  <p className="text-xs text-muted-foreground">Received from all groups</p>
-                </CardContent>
-              </Card>
 
               {/* My Payout Groups Card */}
               <Card>

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -111,6 +111,14 @@ const mockPayoutHistory = [
 const AdminDashboard = ({ userName, userRole, onLogout }: AdminDashboardProps) => {
   const [loans, setLoans] = useState(mockLoans);
   const [payoutGroups, setPayoutGroups] = useState(mockPayoutGroups);
+  const [activeTab, setActiveTab] = useState("loans");
+
+  useEffect(() => {
+    const payoutCard = document.querySelector('.payouts-card') as HTMLElement;
+    if (payoutCard) {
+      payoutCard.style.display = activeTab === 'payouts' ? 'block' : 'none';
+    }
+  }, [activeTab]);
 
   const handlePayoutAction = (groupId: number, action: "payout" | "skip") => {
     setPayoutGroups(prev => prev.map(group => 
@@ -215,14 +223,30 @@ const AdminDashboard = ({ userName, userRole, onLogout }: AdminDashboardProps) =
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="loans" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="loans">Loan Management</TabsTrigger>
-            <TabsTrigger value="payouts">Payout Groups</TabsTrigger>
             <TabsTrigger value="members">Members</TabsTrigger>
             <TabsTrigger value="transactions">Transactions</TabsTrigger>
             <TabsTrigger value="reports">Reports</TabsTrigger>
+            <TabsTrigger value="payouts">Payout Groups</TabsTrigger>
           </TabsList>
+
+          {/* Total Payouts Made Card - shown only when payouts tab is active */}
+          <div className="mt-6">
+            <div className="payouts-card" style={{ display: 'none' }}>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total Payouts Made</CardTitle>
+                  <CheckCircle className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{formatCurrency(475000)}</div>
+                  <p className="text-xs text-muted-foreground">Across all groups</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
 
           <TabsContent value="loans" className="mt-6">
             <Card>
@@ -282,17 +306,6 @@ const AdminDashboard = ({ userName, userRole, onLogout }: AdminDashboardProps) =
 
           <TabsContent value="payouts" className="mt-6">
             <div className="space-y-6">
-              {/* Total Payouts Made Card */}
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Payouts Made</CardTitle>
-                  <CheckCircle className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{formatCurrency(475000)}</div>
-                  <p className="text-xs text-muted-foreground">Across all groups</p>
-                </CardContent>
-              </Card>
 
               {/* Payout Alerts */}
               {payoutGroups.some(group => group.status === "waiting") && (
